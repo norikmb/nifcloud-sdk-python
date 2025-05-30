@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.17.0](https://github.com/nifcloud/nifcloud-sdk-python/tree/v1.17.0) (2025-05-30)
+
+[Full Changelog](https://github.com/nifcloud/nifcloud-sdk-python/compare/v1.16.0...v1.17.0)
+
+**Merged pull requests:**
+
+- fix session.py for proxy [\#129](https://github.com/nifcloud/nifcloud-sdk-python/pull/129) ([fuku2014](https://github.com/fuku2014))
+- Feature/update models [\#127](https://github.com/nifcloud/nifcloud-sdk-python/pull/127) ([fuku2014](https://github.com/fuku2014))
+
 ## [v1.16.0](https://github.com/nifcloud/nifcloud-sdk-python/tree/v1.16.0) (2025-03-14)
 
 [Full Changelog](https://github.com/nifcloud/nifcloud-sdk-python/compare/v1.15.0...v1.16.0)
