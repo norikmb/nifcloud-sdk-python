@@ -20,11 +20,14 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Check isort
-        run: uv run isort . --check-only --diff --quiet
+      - name: Lint with ruff
+        run: uv run ruff check .
 
-      - name: Check flake8
-        run: uv run flake8 .
+      - name: Type check with mypy
+        run: uv run mypy --ignore-missing-imports nifcloud
+
+      - name: Security check with bandit
+        run: uv run bandit -r nifcloud -ll
   unittest:
     # ubuntu-24.04 later does not support Python 3.7
     runs-on: ubuntu-22.04

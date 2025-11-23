@@ -44,6 +44,7 @@ dev = [
     "sphinx==5.3.0",
     "sphinx-rtd-theme",
     "pre-commit",
+    "bandit",
 ]
 
 [tool.uv]
@@ -57,6 +58,7 @@ dev-dependencies = [
     "sphinx==5.3.0",
     "sphinx-rtd-theme",
     "pre-commit",
+    "bandit",
 ]
 
 [tool.setuptools]
