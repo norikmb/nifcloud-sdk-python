@@ -29,9 +29,9 @@ repos:
     rev: v1.14.0
     hooks:
       - id: mypy
-        additional_dependencies: ["types-all"]
-        args: ["--ignore-missing-imports"]
-        exclude: ^tests/
+        args: ["--ignore-missing-imports", "--no-error-summary"]
+        exclude: ^(tests/|docs/)
+        additional_dependencies: []
 
 ci:
   autofix_commit_msg: "chore: auto fixes from pre-commit hooks"

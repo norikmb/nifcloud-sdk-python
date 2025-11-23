@@ -8,3 +8,8 @@
 /docs/source/reference/services/
 __pycache__/
 *.pyc
+/.coverage
+/.coverage.*
+/htmlcov/
+/.mypy_cache/
+/.ruff_cache/

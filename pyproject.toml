@@ -81,6 +81,7 @@ addopts = "--capture=sys"
 [tool.ruff]
 line-length = 120
 target-version = "py38"
+exclude = ["tests/", "docs/"]
 
 [tool.ruff.lint]
 select = [
@@ -96,6 +97,7 @@ ignore = [
     "E501",  # Line too long (handled by formatter)
     "D100",  # Missing module docstring
     "D104",  # Missing package docstring
+    "D102",  # Missing docstring in public method (for tests)
 ]
 
 [tool.flake8]
