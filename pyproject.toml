@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nifcloud"
+dynamic = ["version"]
+description = "Data-driven NIFCLOUD SDK for Python"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache License 2.0"}
+authors = [
+    {name = "Fujitsu"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Natural Language :: English",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "botocore==1.37.10",
+]
+
+[project.urls]
+Repository = "https://github.com/nifcloud/nifcloud-sdk-python"
+
+[project.optional-dependencies]
+dev = [
+    "isort",
+    "flake8",
+    "pytest",
+    "requests",
+    "sphinx==5.3.0",
+    "sphinx-rtd-theme",
+]
+
+[tool.uv]
+# UV configuration
+dev-dependencies = [
+    "isort",
+    "flake8",
+    "pytest",
+    "requests",
+    "sphinx==5.3.0",
+    "sphinx-rtd-theme",
+]
+
+[tool.setuptools]
+packages = ["nifcloud"]
+
+[tool.setuptools.package-data]
+nifcloud = [
+    "data/*.json",
+    "data/*/*/*.json",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "nifcloud.__version__"}
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--capture=sys"
+
+[tool.flake8]
+max-line-length = 88
