@@ -3,7 +3,7 @@ from botocore.model import ServiceModel
 from nifcloud import serialize
 
 
-class TestDnsSerializer(object):
+class TestDnsSerializer:
     dns_model_metadata = {
         "apiVersion": "2012-12-12N2013-12-16",
         "endpointPrefix": "dns",
@@ -12,7 +12,7 @@ class TestDnsSerializer(object):
         "serviceFullName": "NIFCLOUD DNS",
         "serviceId": "dns",
         "signatureVersion": "v3",
-        "uid": "dns-2012-12-12N2013-12-16"
+        "uid": "dns-2012-12-12N2013-12-16",
     }
 
     def test_DnsSerializer(self):
@@ -20,59 +20,41 @@ class TestDnsSerializer(object):
             "metadata": self.dns_model_metadata,
             "operations": {
                 "DnsOperation": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/2012-12-12N2013-12-16/operation"
-                    },
+                    "http": {"method": "POST", "requestUri": "/2012-12-12N2013-12-16/operation"},
                     "input": {
                         "locationName": "DnsOperationRequest",
                         "shape": "DnsOperationRequest",
-                        "xmlNamespace": {
-                            "uri": "https://route53.amazonaws.com/doc/2012-12-12/"
-                        }
+                        "xmlNamespace": {"uri": "https://route53.amazonaws.com/doc/2012-12-12/"},
                     },
                     "name": "DnsOperation",
-                    "output": {
-                        "shape": "DnsOperationResult"
-                    }
+                    "output": {"shape": "DnsOperationResult"},
                 },
             },
             "shapes": {
                 "DnsOperationRequest": {
                     "members": {
-                        "Parameter": {
-                            "locationName": "Parameter",
-                            "shape": "String"
-                        },
+                        "Parameter": {"locationName": "Parameter", "shape": "String"},
                     },
                     "name": "DnsOperationRequest",
-                    "type": "structure"
+                    "type": "structure",
                 },
                 "DnsOperationResult": {
-                    "members": {
-                        "Parameter": {
-                            "locationName": "Parameter",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Parameter": {"locationName": "Parameter", "shape": "String"}},
                     "name": "DnsOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                },
-            }
+                "String": {"name": "String", "type": "string"},
+            },
         }
 
         dns_service_model = ServiceModel(dns_model)
-        params = {
-            "Parameter": "test"
-        }
+        params = {"Parameter": "test"}
         dns_serializer = serialize.DnsSerializer()
-        res = dns_serializer.serialize_to_request(
-            params, dns_service_model.operation_model("DnsOperation"))
-        assert res["body"] == b'<DnsOperationRequest xmlns="https://route53.amazonaws.com/doc/2012-12-12/"><Parameter>test</Parameter></DnsOperationRequest>'  # noqa: E501
+        res = dns_serializer.serialize_to_request(params, dns_service_model.operation_model("DnsOperation"))
+        assert (
+            res["body"]
+            == b'<DnsOperationRequest xmlns="https://route53.amazonaws.com/doc/2012-12-12/"><Parameter>test</Parameter></DnsOperationRequest>'
+        )  # noqa: E501
         assert res["headers"] == {}
         assert res["method"] == "POST"
         assert res["query_string"] == {}

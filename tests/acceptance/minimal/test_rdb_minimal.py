@@ -9,8 +9,7 @@ def client():
 
 
 def test_describe_db_engine_versions(client):
-    db_engine_versions = client.describe_db_engine_versions(
-        Engine='mysql', EngineVersion='5.7.15')["DBEngineVersions"]
+    db_engine_versions = client.describe_db_engine_versions(Engine="mysql", EngineVersion="5.7.15")["DBEngineVersions"]
     assert len(db_engine_versions) == 1
     db_engine_version = db_engine_versions[0]
 

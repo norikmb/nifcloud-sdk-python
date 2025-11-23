@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # nifcloud-sdk-python documentation build configuration file, created by
 # sphinx-quickstart on Mon Apr  2 10:42:39 2018.
@@ -37,20 +36,20 @@ docs.generate_docs(os.path.dirname(os.path.abspath(__file__)), get_session())
 extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = ".rst"
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = 'nifcloud-sdk-python'
-copyright = 'Fujitsu'
+project = "nifcloud-sdk-python"
+copyright = "Fujitsu"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -91,7 +90,7 @@ exclude_patterns = []
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -104,7 +103,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -133,7 +132,7 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -149,11 +148,7 @@ html_static_path = ['_static']
 # html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-    '**': ['globaltoc.html',
-           'localtoc.html',
-           'searchbox.html']
-}
+html_sidebars = {"**": ["globaltoc.html", "localtoc.html", "searchbox.html"]}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -186,7 +181,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'nifcloud-sdk-pythondoc'
+htmlhelp_basename = "nifcloud-sdk-pythondoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -194,10 +189,8 @@ htmlhelp_basename = 'nifcloud-sdk-pythondoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
 }
@@ -206,8 +199,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'nifcloud-sdk-python.tex', 'nifcloud-sdk-python Documentation',
-     'Fujitsu', 'manual'),
+    ("index", "nifcloud-sdk-python.tex", "nifcloud-sdk-python Documentation", "Fujitsu", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -235,10 +227,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'nifcloud-sdk-python', 'nifcloud-sdk-python Documentation',
-     ['Fujitsu'], 1)
-]
+man_pages = [("index", "nifcloud-sdk-python", "nifcloud-sdk-python Documentation", ["Fujitsu"], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -250,9 +239,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'nifcloud-sdk-python', 'nifcloud-sdk-python Documentation',
-     'Fujitsu', 'nifcloud-sdk-python',
-     'One line description of project.', 'Miscellaneous'),
+    (
+        "index",
+        "nifcloud-sdk-python",
+        "nifcloud-sdk-python Documentation",
+        "Fujitsu",
+        "nifcloud-sdk-python",
+        "One line description of project.",
+        "Miscellaneous",
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
