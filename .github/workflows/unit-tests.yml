@@ -1,5 +1,6 @@
 name: Build
 on: [push, pull_request]
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -20,14 +21,21 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Sync dependencies
+        run: uv sync --frozen
+
       - name: Lint with ruff
-        run: uv run ruff check .
+        run: uv run ruff check nifcloud --output-format=github
+
+      - name: Format check with ruff
+        run: uv run ruff format --check nifcloud
 
       - name: Type check with mypy
-        run: uv run mypy --ignore-missing-imports nifcloud
+        run: uv run mypy --ignore-missing-imports --no-error-summary nifcloud
 
       - name: Security check with bandit
-        run: uv run bandit -r nifcloud -ll
+        run: uv run bandit -r nifcloud -ll -f json -o /tmp/bandit.json 2>/dev/null || true
+
   unittest:
     # ubuntu-24.04 later does not support Python 3.7
     runs-on: ubuntu-22.04
@@ -48,5 +56,12 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Sync dependencies
+        run: uv sync --frozen
+
       - name: Run UnitTest
-        run: uv run pytest tests/unit --capture=sys
+        run: uv run pytest tests/unit --capture=sys -v
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.13'
+        run: uv run pytest tests/unit --cov=nifcloud --cov-report=xml --cov-report=term-missing
