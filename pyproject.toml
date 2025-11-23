@@ -36,23 +36,27 @@ Repository = "https://github.com/nifcloud/nifcloud-sdk-python"
 
 [project.optional-dependencies]
 dev = [
-    "isort",
-    "flake8",
+    "ruff",
     "pytest",
+    "pytest-cov",
+    "mypy",
     "requests",
     "sphinx==5.3.0",
     "sphinx-rtd-theme",
+    "pre-commit",
 ]
 
 [tool.uv]
 # UV configuration
 dev-dependencies = [
-    "isort",
-    "flake8",
+    "ruff",
     "pytest",
+    "pytest-cov",
+    "mypy",
     "requests",
     "sphinx==5.3.0",
     "sphinx-rtd-theme",
+    "pre-commit",
 ]
 
 [tool.setuptools]
@@ -74,5 +78,25 @@ profile = "black"
 testpaths = ["tests"]
 addopts = "--capture=sys"
 
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "N",
+    "D",
+    "UP",
+]
+ignore = [
+    "E501",  # Line too long (handled by formatter)
+    "D100",  # Missing module docstring
+    "D104",  # Missing package docstring
+]
+
 [tool.flake8]
-max-line-length = 88
+max-line-length = 120
