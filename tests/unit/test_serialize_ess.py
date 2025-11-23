@@ -3,7 +3,7 @@ from botocore.model import ServiceModel
 from nifcloud import serialize
 
 
-class TestEssSerializer(object):
+class TestEssSerializer:
     ess_model_metadata = {
         "apiVersion": "2010-12-01N2014-05-28",
         "endpointPrefix": "ess",
@@ -13,7 +13,7 @@ class TestEssSerializer(object):
         "serviceId": "ess",
         "signatureVersion": "v4",
         "signingName": "email",
-        "uid": "ess-2010-12-01N2014-05-28"
+        "uid": "ess-2010-12-01N2014-05-28",
     }
 
     def test_EssSerializer(self):
@@ -21,54 +21,31 @@ class TestEssSerializer(object):
             "metadata": self.ess_model_metadata,
             "operations": {
                 "EssOperation": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "EssOperationRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "EssOperationRequest"},
                     "name": "essOperation",
-                    "output": {
-                        "shape": "EssOperationResult"
-                    }
+                    "output": {"shape": "EssOperationResult"},
                 }
             },
             "shapes": {
                 "EssOperationRequest": {
-                    "members": {
-                        "Parameter": {
-                            "locationName": "Parameter",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Parameter": {"locationName": "Parameter", "shape": "String"}},
                     "name": "EssOperationRequest",
-                    "type": "structure"
+                    "type": "structure",
                 },
                 "EssOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "EssOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                },
-            }
+                "String": {"name": "String", "type": "string"},
+            },
         }
 
         ess_service_model = ServiceModel(ess_model)
-        params = {
-            "Parameter": "test"
-        }
+        params = {"Parameter": "test"}
         ess_serializer = serialize.EssSerializer()
-        res = ess_serializer.serialize_to_request(
-            params, ess_service_model.operation_model("EssOperation"))
+        res = ess_serializer.serialize_to_request(params, ess_service_model.operation_model("EssOperation"))
         assert res["body"] == {"Action": "EssOperation", "Parameter": "test", "Version": "2010-12-01N2014-05-28"}
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"
@@ -80,80 +57,40 @@ class TestEssSerializer(object):
             "metadata": self.ess_model_metadata,
             "operations": {
                 "GetDeliveryLog": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "GetDeliveryLogRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "GetDeliveryLogRequest"},
                     "name": "essOperation",
-                    "output": {
-                        "shape": "EssOperationResult"
-                    }
+                    "output": {"shape": "EssOperationResult"},
                 }
             },
             "shapes": {
                 "GetDeliveryLogRequest": {
                     "members": {
-                        "EndDate": {
-                            "locationName": "EndDate",
-                            "shape": "TStamp"
-                        },
-                        "MaxItems": {
-                            "locationName": "MaxItems",
-                            "shape": "Integer"
-                        },
-                        "NextToken": {
-                            "locationName": "NextToken",
-                            "shape": "String"
-                        },
-                        "StartDate": {
-                            "locationName": "StartDate",
-                            "shape": "TStamp"
-                        },
-                        "Status": {
-                            "locationName": "Status",
-                            "shape": "Integer"
-                        }
+                        "EndDate": {"locationName": "EndDate", "shape": "TStamp"},
+                        "MaxItems": {"locationName": "MaxItems", "shape": "Integer"},
+                        "NextToken": {"locationName": "NextToken", "shape": "String"},
+                        "StartDate": {"locationName": "StartDate", "shape": "TStamp"},
+                        "Status": {"locationName": "Status", "shape": "Integer"},
                     },
                     "name": "GetDeliveryLogRequest",
-                    "required": [
-                        "EndDate",
-                        "StartDate"
-                    ],
-                    "type": "structure"
+                    "required": ["EndDate", "StartDate"],
+                    "type": "structure",
                 },
                 "EssOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "EssOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "Integer": {
-                    "name": "Integer",
-                    "type": "integer"
-                },
-                "TStamp": {
-                    "name": "TStamp",
-                    "type": "timestamp"
-                },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                }
-            }
+                "Integer": {"name": "Integer", "type": "integer"},
+                "TStamp": {"name": "TStamp", "type": "timestamp"},
+                "String": {"name": "String", "type": "string"},
+            },
         }
 
         ess_service_model = ServiceModel(ess_model)
         params = {}
         ess_serializer = serialize.EssSerializer()
-        res = ess_serializer.serialize_to_request(
-            params, ess_service_model.operation_model("GetDeliveryLog"))
+        res = ess_serializer.serialize_to_request(params, ess_service_model.operation_model("GetDeliveryLog"))
         assert res["body"] == {"Action": "GetDeliveryLog", "Version": "2010-12-01N2014-05-28"}
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"
@@ -165,73 +102,34 @@ class TestEssSerializer(object):
             "metadata": self.ess_model_metadata,
             "operations": {
                 "GetDeliveryLog": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "GetDeliveryLogRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "GetDeliveryLogRequest"},
                     "name": "essOperation",
-                    "output": {
-                        "shape": "EssOperationResult"
-                    }
+                    "output": {"shape": "EssOperationResult"},
                 }
             },
             "shapes": {
                 "GetDeliveryLogRequest": {
                     "members": {
-                        "EndDate": {
-                            "locationName": "EndDate",
-                            "shape": "TStamp"
-                        },
-                        "MaxItems": {
-                            "locationName": "MaxItems",
-                            "shape": "Integer"
-                        },
-                        "NextToken": {
-                            "locationName": "NextToken",
-                            "shape": "String"
-                        },
-                        "StartDate": {
-                            "locationName": "StartDate",
-                            "shape": "TStamp"
-                        },
-                        "Status": {
-                            "locationName": "Status",
-                            "shape": "Integer"
-                        }
+                        "EndDate": {"locationName": "EndDate", "shape": "TStamp"},
+                        "MaxItems": {"locationName": "MaxItems", "shape": "Integer"},
+                        "NextToken": {"locationName": "NextToken", "shape": "String"},
+                        "StartDate": {"locationName": "StartDate", "shape": "TStamp"},
+                        "Status": {"locationName": "Status", "shape": "Integer"},
                     },
                     "name": "GetDeliveryLogRequest",
-                    "required": [
-                        "EndDate",
-                        "StartDate"
-                    ],
-                    "type": "structure"
+                    "required": ["EndDate", "StartDate"],
+                    "type": "structure",
                 },
                 "EssOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "EssOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "Integer": {
-                    "name": "Integer",
-                    "type": "integer"
-                },
-                "TStamp": {
-                    "name": "TStamp",
-                    "type": "timestamp"
-                },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                }
-            }
+                "Integer": {"name": "Integer", "type": "integer"},
+                "TStamp": {"name": "TStamp", "type": "timestamp"},
+                "String": {"name": "String", "type": "string"},
+            },
         }
 
         ess_service_model = ServiceModel(ess_model)
@@ -240,11 +138,10 @@ class TestEssSerializer(object):
             "MaxItems": 1,
             "NextToken": "test_token",
             "StartDate": "2017-12-13T00:00:00Z",
-            "EndDate": "2017-12-13T23:59:00Z"
+            "EndDate": "2017-12-13T23:59:00Z",
         }
         ess_serializer = serialize.EssSerializer()
-        res = ess_serializer.serialize_to_request(
-            params, ess_service_model.operation_model("GetDeliveryLog"))
+        res = ess_serializer.serialize_to_request(params, ess_service_model.operation_model("GetDeliveryLog"))
         assert res["body"] == {
             "Action": "GetDeliveryLog",
             "Version": "2010-12-01N2014-05-28",
@@ -252,7 +149,7 @@ class TestEssSerializer(object):
             "MaxItems": 1,
             "NextToken": "test_token",
             "StartDate": "2017-12-13T00:00",
-            "EndDate": "2017-12-13T23:59"
+            "EndDate": "2017-12-13T23:59",
         }
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"

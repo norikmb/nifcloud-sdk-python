@@ -1,6 +1,6 @@
-FROM python:3.13.2
+FROM python:3.13-slim
 WORKDIR /usr/local/app
-RUN apt-get update && apt-get install -y groff-base
-ADD Pipfile /usr/local/app
-RUN pip install pipenv==2024.4.1 && pipenv install --skip-lock -d
-ENTRYPOINT ["pipenv", "run"]
+RUN pip install uv
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
+ENTRYPOINT ["uv", "run"]

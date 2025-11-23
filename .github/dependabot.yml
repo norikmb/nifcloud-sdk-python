@@ -1,0 +1,39 @@
+version: 2
+updates:
+  # Python依存関係（uv.lock）の更新チェック
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "norikmb"
+    commit-message:
+      prefix: "ci: "
+      prefix-development: "ci: "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "python"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+
+  # GitHub Actions の自動更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:30"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "norikmb"
+    commit-message:
+      prefix: "ci: "
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"

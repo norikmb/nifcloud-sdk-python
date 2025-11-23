@@ -20,18 +20,41 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install pipenv
-        run: pip install pipenv==2024.4.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
 
-      - name: Install dependencies
-        run: pipenv install --skip-lock -d
+      - name: Sync dependencies
+        run: uv sync --frozen
 
-      - name: Run acceptance minimal 
-        run: pipenv run test
+      - name: Check credentials
+        id: check-creds
+        run: |
+          if [ -z "$NIFCLOUD_ACCESS_KEY_ID" ] || [ -z "$NIFCLOUD_SECRET_ACCESS_KEY" ]; then
+            echo "has-credentials=false" >> $GITHUB_OUTPUT
+            echo "⏭️  Skipping acceptance tests (credentials not configured)"
+          else
+            echo "has-credentials=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run acceptance tests
+        if: steps.check-creds.outputs.has-credentials == 'true'
+        run: uv run pytest tests/acceptance/minimal --capture=sys -v
+
+      - name: Notice
+        if: steps.check-creds.outputs.has-credentials == 'false'
+        run: |
+          echo "⏭️  Acceptance tests were skipped due to missing credentials."
+          echo "To enable acceptance tests, configure these GitHub Secrets:"
+          echo "  - NIFCLOUD_ACCESS_KEY_ID"
+          echo "  - NIFCLOUD_SECRET_ACCESS_KEY"
+          echo "  - NIFCLOUD_STORAGE_ACCESS_KEY_ID (optional)"
+          echo "  - NIFCLOUD_STORAGE_SECRET_ACCESS_KEY (optional)"

@@ -3,7 +3,7 @@ from botocore.model import ServiceModel
 from nifcloud import serialize
 
 
-class TestRdbSerializer(object):
+class TestRdbSerializer:
     rdb_model_metadata = {
         "apiVersion": "2013-05-15N2013-12-16",
         "endpointPrefix": "rdb",
@@ -12,7 +12,7 @@ class TestRdbSerializer(object):
         "serviceFullName": "NIFCLOUD RDB",
         "serviceId": "rdb",
         "signatureVersion": "v4",
-        "uid": "rdb-2013-05-15N2013-12-16"
+        "uid": "rdb-2013-05-15N2013-12-16",
     }
 
     def test_RdbSerializer(self):
@@ -20,54 +20,31 @@ class TestRdbSerializer(object):
             "metadata": self.rdb_model_metadata,
             "operations": {
                 "RdbOperation": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "RdbOperationRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "RdbOperationRequest"},
                     "name": "rdbOperation",
-                    "output": {
-                        "shape": "RdbOperationResult"
-                    }
+                    "output": {"shape": "RdbOperationResult"},
                 }
             },
             "shapes": {
                 "RdbOperationRequest": {
-                    "members": {
-                        "Parameter": {
-                            "locationName": "Parameter",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Parameter": {"locationName": "Parameter", "shape": "String"}},
                     "name": "RdbOperationRequest",
-                    "type": "structure"
+                    "type": "structure",
                 },
                 "RdbOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "RdbOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                },
-            }
+                "String": {"name": "String", "type": "string"},
+            },
         }
 
         rdb_service_model = ServiceModel(rdb_model)
-        params = {
-            "Parameter": "test"
-        }
+        params = {"Parameter": "test"}
         rdb_serializer = serialize.RdbSerializer()
-        res = rdb_serializer.serialize_to_request(
-            params, rdb_service_model.operation_model("RdbOperation"))
+        res = rdb_serializer.serialize_to_request(params, rdb_service_model.operation_model("RdbOperation"))
         assert res["body"] == {"Action": "RdbOperation", "Parameter": "test", "Version": "2013-05-15N2013-12-16"}
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"
@@ -79,99 +56,52 @@ class TestRdbSerializer(object):
             "metadata": self.rdb_model_metadata,
             "operations": {
                 "NiftyGetMetricStatistics": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "NiftyGetMetricStatisticsRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "NiftyGetMetricStatisticsRequest"},
                     "name": "NiftyGetMetricStatistics",
-                    "output": {
-                        "resultWrapper": "RdbOperationResult",
-                        "shape": "RdbOperationResult"
-                    }
+                    "output": {"resultWrapper": "RdbOperationResult", "shape": "RdbOperationResult"},
                 },
             },
             "shapes": {
                 "NiftyGetMetricStatisticsRequest": {
                     "members": {
-                        "Dimensions": {
-                            "locationName": "Dimensions",
-                            "shape": "ListOfRequestDimensions"
-                        },
-                        "EndTime": {
-                            "locationName": "EndTime",
-                            "shape": "TStamp"
-                        },
-                        "MetricName": {
-                            "locationName": "MetricName",
-                            "shape": "String"
-                        },
-                        "StartTime": {
-                            "locationName": "StartTime",
-                            "shape": "TStamp"
-                        }
+                        "Dimensions": {"locationName": "Dimensions", "shape": "ListOfRequestDimensions"},
+                        "EndTime": {"locationName": "EndTime", "shape": "TStamp"},
+                        "MetricName": {"locationName": "MetricName", "shape": "String"},
+                        "StartTime": {"locationName": "StartTime", "shape": "TStamp"},
                     },
                     "name": "NiftyGetMetricStatisticsRequest",
-                    "type": "structure"
+                    "type": "structure",
                 },
                 "ListOfRequestDimensions": {
-                    "member": {
-                        "locationName": "member",
-                        "shape": "RequestDimensions"
-                    },
+                    "member": {"locationName": "member", "shape": "RequestDimensions"},
                     "name": "ListOfRequestDimensions",
-                    "type": "list"
+                    "type": "list",
                 },
                 "RequestDimensions": {
                     "members": {
-                        "Name": {
-                            "locationName": "Name",
-                            "shape": "String"
-                        },
-                        "Value": {
-                            "locationName": "Value",
-                            "shape": "String"
-                        }
+                        "Name": {"locationName": "Name", "shape": "String"},
+                        "Value": {"locationName": "Value", "shape": "String"},
                     },
                     "name": "RequestDimensions",
-                    "required": [
-                        "Name",
-                        "Value"
-                    ],
-                    "type": "structure"
+                    "required": ["Name", "Value"],
+                    "type": "structure",
                 },
                 "RdbOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "RdbOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                },
-                "TStamp": {
-                    "name": "TStamp",
-                    "type": "timestamp"
-                }
-            }
+                "String": {"name": "String", "type": "string"},
+                "TStamp": {"name": "TStamp", "type": "timestamp"},
+            },
         }
 
         rdb_service_model = ServiceModel(rdb_model)
         params = {}
         rdb_serializer = serialize.RdbSerializer()
-        res = rdb_serializer.serialize_to_request(
-            params, rdb_service_model.operation_model("NiftyGetMetricStatistics"))
-        assert res["body"] == {
-            "Action": "NiftyGetMetricStatistics",
-            "Version": "2013-05-15N2013-12-16"
-        }
+        res = rdb_serializer.serialize_to_request(params, rdb_service_model.operation_model("NiftyGetMetricStatistics"))
+        assert res["body"] == {"Action": "NiftyGetMetricStatistics", "Version": "2013-05-15N2013-12-16"}
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"
         assert res["query_string"] == ""
@@ -182,110 +112,61 @@ class TestRdbSerializer(object):
             "metadata": self.rdb_model_metadata,
             "operations": {
                 "NiftyGetMetricStatistics": {
-                    "http": {
-                        "method": "POST",
-                        "requestUri": "/"
-                    },
-                    "input": {
-                        "shape": "NiftyGetMetricStatisticsRequest"
-                    },
+                    "http": {"method": "POST", "requestUri": "/"},
+                    "input": {"shape": "NiftyGetMetricStatisticsRequest"},
                     "name": "NiftyGetMetricStatistics",
-                    "output": {
-                        "resultWrapper": "RdbOperationResult",
-                        "shape": "RdbOperationResult"
-                    }
+                    "output": {"resultWrapper": "RdbOperationResult", "shape": "RdbOperationResult"},
                 },
             },
             "shapes": {
                 "NiftyGetMetricStatisticsRequest": {
                     "members": {
-                        "Dimensions": {
-                            "locationName": "Dimensions",
-                            "shape": "ListOfRequestDimensions"
-                        },
-                        "EndTime": {
-                            "locationName": "EndTime",
-                            "shape": "TStamp"
-                        },
-                        "MetricName": {
-                            "locationName": "MetricName",
-                            "shape": "String"
-                        },
-                        "StartTime": {
-                            "locationName": "StartTime",
-                            "shape": "TStamp"
-                        }
+                        "Dimensions": {"locationName": "Dimensions", "shape": "ListOfRequestDimensions"},
+                        "EndTime": {"locationName": "EndTime", "shape": "TStamp"},
+                        "MetricName": {"locationName": "MetricName", "shape": "String"},
+                        "StartTime": {"locationName": "StartTime", "shape": "TStamp"},
                     },
                     "name": "NiftyGetMetricStatisticsRequest",
-                    "required": [
-                        "MetricName",
-                        "Dimensions"
-                    ],
-                    "type": "structure"
+                    "required": ["MetricName", "Dimensions"],
+                    "type": "structure",
                 },
                 "ListOfRequestDimensions": {
-                    "member": {
-                        "locationName": "member",
-                        "shape": "RequestDimensions"
-                    },
+                    "member": {"locationName": "member", "shape": "RequestDimensions"},
                     "name": "ListOfRequestDimensions",
-                    "type": "list"
+                    "type": "list",
                 },
                 "RequestDimensions": {
                     "members": {
-                        "Name": {
-                            "locationName": "Name",
-                            "shape": "String"
-                        },
-                        "Value": {
-                            "locationName": "Value",
-                            "shape": "String"
-                        }
+                        "Name": {"locationName": "Name", "shape": "String"},
+                        "Value": {"locationName": "Value", "shape": "String"},
                     },
                     "name": "RequestDimensions",
-                    "required": [
-                        "Name",
-                        "Value"
-                    ],
-                    "type": "structure"
+                    "required": ["Name", "Value"],
+                    "type": "structure",
                 },
                 "RdbOperationResult": {
-                    "members": {
-                        "Response": {
-                            "locationName": "Response",
-                            "shape": "String"
-                        }
-                    },
+                    "members": {"Response": {"locationName": "Response", "shape": "String"}},
                     "name": "RdbOperationResult",
-                    "type": "structure"
+                    "type": "structure",
                 },
-                "String": {
-                    "name": "String",
-                    "type": "string"
-                },
-                "TStamp": {
-                    "name": "TStamp",
-                    "type": "timestamp"
-                }
-            }
+                "String": {"name": "String", "type": "string"},
+                "TStamp": {"name": "TStamp", "type": "timestamp"},
+            },
         }
 
         rdb_service_model = ServiceModel(rdb_model)
         params = {
             "MetricName": "test_metric_name",
-            "Dimensions": [
-                {"Name": "test_dimensions_name", "Value": "test_value"}
-            ]
+            "Dimensions": [{"Name": "test_dimensions_name", "Value": "test_value"}],
         }
         rdb_serializer = serialize.RdbSerializer()
-        res = rdb_serializer.serialize_to_request(
-            params, rdb_service_model.operation_model("NiftyGetMetricStatistics"))
+        res = rdb_serializer.serialize_to_request(params, rdb_service_model.operation_model("NiftyGetMetricStatistics"))
         assert res["body"] == {
             "Action": "NiftyGetMetricStatistics",
             "MetricName": "test_metric_name",
             "Version": "2013-05-15N2013-12-16",
             "Dimensions.member.1.Name": "test_dimensions_name",
-            "Dimensions.member.1.Value": "test_value"
+            "Dimensions.member.1.Value": "test_value",
         }
         assert res["headers"] == {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}
         assert res["method"] == "POST"

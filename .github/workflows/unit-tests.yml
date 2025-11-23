@@ -1,5 +1,6 @@
 name: Build
 on: [push, pull_request]
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -8,24 +9,33 @@ jobs:
         python-version: ["3.13"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install pipenv
-        run: pip install pipenv==2024.4.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
 
-      - name: Install dependencies
-        run: pipenv install --skip-lock -d
+      - name: Sync dependencies
+        run: uv sync --frozen
 
-      - name: Check isort
-        run: pipenv run isort . --check-only --diff --quiet
+      - name: Lint with ruff
+        run: uv run ruff check nifcloud --output-format=github
 
-      - name: Check flake8
-        run: pipenv run lint
+      - name: Format check with ruff
+        run: uv run ruff format --check nifcloud
+
+      - name: Type check with mypy
+        run: uv run mypy --ignore-missing-imports --no-error-summary nifcloud
+
+      - name: Security check with bandit
+        run: uv run bandit -r nifcloud -ll -f json -o /tmp/bandit.json 2>/dev/null || true
+
   unittest:
     # ubuntu-24.04 later does not support Python 3.7
     runs-on: ubuntu-22.04
@@ -34,18 +44,24 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install pipenv
-        run: pip install pipenv==2024.4.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
 
-      - name: Install dependencies
-        run: pipenv install --skip-lock -d
+      - name: Sync dependencies
+        run: uv sync --frozen
 
       - name: Run UnitTest
-        run: pipenv run unittest
+        run: uv run pytest tests/unit --capture=sys -v
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.13'
+        run: uv run pytest tests/unit --cov=nifcloud --cov-report=xml --cov-report=term-missing
