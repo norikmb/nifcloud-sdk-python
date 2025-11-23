@@ -32,5 +32,29 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Run acceptance minimal
-        run: uv run pytest tests/acceptance/minimal --capture=sys
+      - name: Sync dependencies
+        run: uv sync --frozen
+
+      - name: Check credentials
+        id: check-creds
+        run: |
+          if [ -z "$NIFCLOUD_ACCESS_KEY_ID" ] || [ -z "$NIFCLOUD_SECRET_ACCESS_KEY" ]; then
+            echo "has-credentials=false" >> $GITHUB_OUTPUT
+            echo "⏭️  Skipping acceptance tests (credentials not configured)"
+          else
+            echo "has-credentials=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run acceptance tests
+        if: steps.check-creds.outputs.has-credentials == 'true'
+        run: uv run pytest tests/acceptance/minimal --capture=sys -v
+
+      - name: Notice
+        if: steps.check-creds.outputs.has-credentials == 'false'
+        run: |
+          echo "⏭️  Acceptance tests were skipped due to missing credentials."
+          echo "To enable acceptance tests, configure these GitHub Secrets:"
+          echo "  - NIFCLOUD_ACCESS_KEY_ID"
+          echo "  - NIFCLOUD_SECRET_ACCESS_KEY"
+          echo "  - NIFCLOUD_STORAGE_ACCESS_KEY_ID (optional)"
+          echo "  - NIFCLOUD_STORAGE_SECRET_ACCESS_KEY (optional)"
